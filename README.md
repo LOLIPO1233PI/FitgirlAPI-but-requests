@@ -14,14 +14,15 @@ This is a Python API designed to interact with the FitGirl Repacks website (http
 
 3. **Download:**
    - Retrieves download links for a specific game.
-   - Returns a JSON object with download URLs and titles.
+   - Returns a JSON object with download URLs and titles that are SFW.
+
 
 ## Installation
 
 Before using the API, make sure to install httpx. You can install it using the following command:
 
 ```bash
-pip install httpx
+pip install requests
 ```
 
 ## Usage
@@ -52,7 +53,7 @@ pip install httpx
 
 ## Notes
 
-- This API uses either the `httpx` lbrary.
+- This API uses either the `requests` lbrary.
 - In case of errors, the API returns a JSON object with the status and an error message.
 
 Feel free to explore and integrate this API into your projects to enhance your experience with FitGirl Repacks. For more information on FitGirl Repacks, visit their official website: [FitGirl Repacks](https://fitgirl-repacks.site/).
