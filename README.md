@@ -19,7 +19,7 @@ This is a Python API designed to interact with the FitGirl Repacks website (http
 
 ## Installation
 
-Before using the API, make sure to install httpx. You can install it using the following command:
+Before using the API, make sure to install requests. You can install it using the following command:
 
 ```bash
 pip install requests

@@ -3,19 +3,67 @@ from requests.adapters import Retry, HTTPAdapter
 import re
 
 NSFW_BLOCK_LIST = NSFW_KEYWORDS = [
-    "hentai", "eroge", "nsfw", "xxx", "18+", "lewd", "porn", "sex", "sexual", "uncensored",
-    "ecchi", "oppai", "lust", "futanari", "loli", "shota", "yuri", "yaoi", "otome", "nukige",
-    "nude", "naked", "boobs", "breasts", "genitals", "vagina", "penis", "cum", "orgasm", "hardcore",
-    "incest", "milf", "tentacle", "bdsm", "rape", "bestiality", "pegging", "impregnation", "hypnosis",
-    "dlsite", "nutaku", "f95zone", "erogamescape", "hgames", "anime-sharing",
-    "visual novel with adult content", "mature content", "contains sexual content",
+    "hentai",
+    "eroge",
+    "nsfw",
+    "xxx",
+    "18+",
+    "lewd",
+    "porn",
+    "sex",
+    "sexual",
+    "uncensored",
+    "ecchi",
+    "oppai",
+    "lust",
+    "futanari",
+    "loli",
+    "shota",
+    "yuri",
+    "yaoi",
+    "otome",
+    "nukige",
+    "nude",
+    "naked",
+    "boobs",
+    "breasts",
+    "genitals",
+    "vagina",
+    "penis",
+    "cum",
+    "orgasm",
+    "hardcore",
+    "incest",
+    "milf",
+    "tentacle",
+    "bdsm",
+    "rape",
+    "bestiality",
+    "pegging",
+    "impregnation",
+    "hypnosis",
+    "dlsite",
+    "nutaku",
+    "f95zone",
+    "erogamescape",
+    "hgames",
+    "anime-sharing",
+    "visual novel with adult content",
+    "mature content",
+    "contains sexual content",
 ]
+
+
+unknown = "Sorry, but nothing matched your search terms. Please try again with some different keywords."
+
 
 class FitGirl:
     """
     A unofficial Api for **fitgirl repack**
     """
+
     BASE_URL: str = "https://fitgirl-repacks.site/"
+
     def __init__(
         self,
         retry: int = 2,
@@ -58,17 +106,14 @@ class FitGirl:
             if i in query:
                 return False
         return True
-        
+
     def search(self, query: str):
         if not self.filter_query(query):
             return {"status": "Error", "message": "Nsfw query detected"}
         try:
             response = self.client.get(f"{self.BASE_URL}?s={query}")
 
-            if (
-                "Sorry, but nothing matched your search terms. Please try again with some different keywords."
-                in response.text
-            ):
+            if unknown in response.text:
                 return {"status": "Error", "message": "No results found."}
 
             results = re.findall(
@@ -79,7 +124,9 @@ class FitGirl:
 
             for result in results:
                 if not self.filter_query(result[1]):
-                    json_results["results"].append({"url": "******", "title": "NSFW GAME"})
+                    json_results["results"].append(
+                        {"url": "******", "title": "NSFW GAME"}
+                    )
                     continue
                 json_results["results"].append({"url": result[0], "title": result[1]})
 
@@ -94,10 +141,7 @@ class FitGirl:
         try:
             response = self.client.get(f"{self.BASE_URL}?s={query}")
 
-            if (
-                "Sorry, but nothing matched your search terms. Please try again with some different keywords."
-                in response.text
-            ):
+            if unknown in response.text:
                 return {"status": "Error", "message": "No results found."}
 
             results = re.findall(
@@ -121,9 +165,11 @@ class FitGirl:
             json_results = {"status": "Success", "results": []}
             for result in results:
                 if not self.filter_query(result[1]):
-                    json_results["results"].append({"url": "******", "title": "NSFW GAME"})
+                    json_results["results"].append(
+                        {"url": "******", "title": "NSFW GAME"}
+                    )
                     continue
-                json_results["results"].append({"url": result[0], "title": result[1]})
+                json_results["results"].append({"url": result.pop(0), "title": result.pop(0)})
 
             return json_results
 
